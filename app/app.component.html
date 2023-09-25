@@ -1,0 +1,46 @@
+<h1>{{ title }}</h1>
+<div class="item-container">
+<div *ngFor="let item of items" class="item">
+  <p class="item-name">{{ item.name }}</p>
+  <div *ngFor="let product of item.items" class="product">
+    <p class="product-name">{{ product.itemName }}</p>
+    <p class="product-quantity">{{ product.itemQuantity }}</p>
+  </div>
+</div>
+</div>
+
+<form (ngSubmit)="Items()">
+  <label for="itemId">Enter Id</label>
+  <input type="number" [(ngModel)]="itemId" id="itemId" name="itemId">
+  <button type="submit">Submit</button>
+</form>
+
+<div *ngIf="filteredItem">
+  <h1>Box Have: {{ filteredItem.name }}</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>Select</th>
+        <th>Item Name</th>
+        <th>Item Quantity</th>
+        <th>Item Price</th>
+        <th>Increment</th>
+        <th>Item Purchased</th>
+        <th>Decrement</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let product of filteredItem.items">
+        <td><input type="checkbox" [(ngModel)]="product.selected"></td>
+        <td>{{ product.itemName }}</td>
+        <td>{{ product.itemQuantity }}</td>
+        <td>{{ product.itemPrice }}</td>
+        <td><button (click)="incrementQuantity(product)">+</button></td>
+        <td>{{ product.itemPurchased }}</td>
+        <td><button (click)="decrementQuantity(product)">-</button></td>
+      </tr>
+    </tbody>
+  </table>
+  <h1>Total Amount:{{calculateTotalPrice()}}</h1>
+  <button (click)="buyItems()">Buy</button>
+</div>
